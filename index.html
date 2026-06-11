@@ -50,8 +50,8 @@
 
     .nav-logo {
       font-family: var(--display);
-      font-weight: 300;
-      font-size: 1.1rem;
+      font-weight: 700;
+      font-size: 1.5rem;
       letter-spacing: 0.18em;
       color: var(--gold);
       text-decoration: none;
@@ -313,7 +313,7 @@
 
     .about-card-num {
       font-family: var(--display);
-      font-size: 5rem;
+      font-size: 3.2rem;
       font-weight: 300;
       color: var(--gold);
       line-height: 1;
@@ -805,8 +805,8 @@
         <div class="about-visual">
           <div class="about-card">
             <div class="about-card-inner">
-              <div class="about-card-num">100%</div>
-              <div class="about-card-label">of net proceeds fund water infrastructure</div>
+              <div class="about-card-num">Majority</div>
+              <div class="about-card-label">of proceeds fund water infrastructure</div>
               <p class="about-card-desc">From Sub-Saharan Africa to rural South Asia — we go where the need is greatest, building permanent infrastructure that communities own and maintain.</p>
               <div style="margin-top:2rem; padding-top:1.5rem; border-top:1px solid rgba(255,255,255,0.08);">
                 <div class="about-card-num" style="font-size:2.8rem;">$5.00</div>
@@ -1061,8 +1061,8 @@
             <label for="website">Leave this blank</label>
             <input type="text" id="website" name="website" tabindex="-1" autocomplete="off" />
           </div>
-          <button class="btn-primary" style="width:100%; text-align:center; cursor:pointer;" onclick="handleSubmit()">Send Message →</button>
-          <p class="form-note">Opens your email app pre-filled · Sent to info@universalwateralliance.com</p>
+          <button class="btn-primary" id="submit-btn" style="width:100%; text-align:center; cursor:pointer;" onclick="handleSubmit()">Send Message →</button>
+          <p class="form-note" id="form-note">We'll reply to the email address you provide.</p>
         </div>
       </div>
     </div>
@@ -1096,14 +1096,21 @@
   </footer>
 
   <script>
-    // ── mailto form ──
-    function handleSubmit() {
+    // ── Web3Forms submission ──
+    // 1. Go to https://web3forms.com
+    // 2. Enter your email address → they'll send you an access key
+    // 3. Paste that key in place of YOUR_ACCESS_KEY_HERE below
+    const WEB3FORMS_KEY = '4b6eb138-a54b-4cb8-ab69-88f655bd4424';
+
+    async function handleSubmit() {
       const fname    = document.getElementById('fname').value.trim();
       const lname    = document.getElementById('lname').value.trim();
       const email    = document.getElementById('email').value.trim();
       const interest = document.getElementById('interest').value;
       const message  = document.getElementById('message').value.trim();
       const honeypot = document.getElementById('website').value;
+      const btn      = document.getElementById('submit-btn');
+      const note     = document.getElementById('form-note');
 
       if (honeypot) return; // bot trap
 
@@ -1120,15 +1127,47 @@
         return;
       }
 
-      const subject = encodeURIComponent('New inquiry: ' + interest + ' — Universal Water Alliance');
-      const body = encodeURIComponent(
-        'Name: ' + fname + ' ' + lname + '\n' +
-        'Email: ' + email + '\n' +
-        'Interest: ' + interest + '\n\n' +
-        'Message:\n' + message
-      );
+      // Disable button while sending
+      btn.disabled = true;
+      btn.textContent = 'Sending…';
+      note.textContent = '';
 
-      window.location.href = 'mailto:info@universalwateralliance.com?subject=' + subject + '&body=' + body;
+      try {
+        const res = await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body: JSON.stringify({
+            access_key: WEB3FORMS_KEY,
+            subject: 'New inquiry: ' + interest + ' — Universal Water Alliance',
+            name: fname + ' ' + lname,
+            email: email,
+            interest: interest,
+            message: message,
+            botcheck: honeypot, // Web3Forms also checks this natively
+            to: 'lakshaye.a@gmail.com'
+          })
+        });
+
+        const data = await res.json();
+
+        if (data.success) {
+          btn.textContent = 'Message Sent ✓';
+          btn.style.background = '#4a9a6a';
+          note.textContent = 'Thank you — we\'ll be in touch soon.';
+          note.style.color = '#4a9a6a';
+          // Clear the form
+          ['fname','lname','email','message'].forEach(id => document.getElementById(id).value = '');
+          document.getElementById('interest').selectedIndex = 0;
+        } else {
+          throw new Error(data.message || 'Submission failed');
+        }
+      } catch (err) {
+        btn.disabled = false;
+        btn.textContent = 'Send Message →';
+        note.textContent = 'Something went wrong — please try again or email us directly.';
+        note.style.color = '#c0392b';
+        console.error('Web3Forms error:', err);
+      }
     }
 
     // ── Active nav highlight ──
