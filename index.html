@@ -736,7 +736,7 @@
       <li><a href="#product">Shop</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
-    <a href="#product" class="nav-cta">Shop — $120</a>
+    <a href="#product" class="nav-cta">Give Back</a>
   </nav>
 
   <!-- HERO -->
@@ -753,7 +753,7 @@
       <h1 class="hero-headline">Water is a<br/><em>human right,</em><br/>not a privilege.</h1>
       <p class="hero-sub">Every pack of 24 you purchase sends clean water to communities where the nearest source is miles away. Premium matte black. Gold engraved.</p>
       <div class="hero-actions">
-        <a href="#product" class="btn-primary">Shop Packs of 24 — $120</a>
+        <a href="#product" class="btn-primary">Give Back</a>
         <a href="#about" class="btn-ghost">Our Mission</a>
       </div>
     </div>
@@ -823,7 +823,7 @@
   <section class="programs" id="programs">
     <div class="inner">
       <p class="section-label">What We Do</p>
-      <h2 class="section-title">Three ways we<br/><em>move water.</em></h2>
+      <h2 class="section-title">Six ways we<br/><em>move water.</em></h2>
       <div class="programs-grid" style="margin-top:3.5rem;">
 
         <div class="program-card">
@@ -1012,14 +1012,7 @@
               <div class="contact-icon">✉</div>
               <div>
                 <div class="contact-item-label">Email</div>
-                <div class="contact-item-val">hello@universalwateralliance.org</div>
-              </div>
-            </div>
-            <div class="contact-item">
-              <div class="contact-icon">📞</div>
-              <div>
-                <div class="contact-item-label">Phone</div>
-                <div class="contact-item-val">510-579-3309</div>
+                <div class="contact-item-val">info@universalwateralliance.com</div>
               </div>
             </div>
             <div class="contact-item">
@@ -1063,8 +1056,13 @@
             <label for="message">Message</label>
             <textarea id="message" placeholder="Tell us about your project, order, or question…"></textarea>
           </div>
+          <!-- Honeypot field — hidden from real users, bots fill it in -->
+          <div style="position:absolute; left:-9999px; top:-9999px; opacity:0; pointer-events:none;" aria-hidden="true">
+            <label for="website">Leave this blank</label>
+            <input type="text" id="website" name="website" tabindex="-1" autocomplete="off" />
+          </div>
           <button class="btn-primary" style="width:100%; text-align:center; cursor:pointer;" onclick="handleSubmit()">Send Message →</button>
-          <p class="form-note">We respond to every message within 24 hours. Your data is never shared.</p>
+          <p class="form-note">Opens your email app pre-filled · Sent to info@universalwateralliance.com</p>
         </div>
       </div>
     </div>
@@ -1098,17 +1096,42 @@
   </footer>
 
   <script>
+    // ── mailto form ──
     function handleSubmit() {
-      const email = document.getElementById('email').value;
-      const fname = document.getElementById('fname').value;
-      if (!email || !fname) {
+      const fname    = document.getElementById('fname').value.trim();
+      const lname    = document.getElementById('lname').value.trim();
+      const email    = document.getElementById('email').value.trim();
+      const interest = document.getElementById('interest').value;
+      const message  = document.getElementById('message').value.trim();
+      const honeypot = document.getElementById('website').value;
+
+      if (honeypot) return; // bot trap
+
+      if (!fname || !email) {
         alert('Please fill in your name and email to continue.');
         return;
       }
-      alert('Thank you for reaching out! We\'ll be in touch within 24 hours.');
+      if (!interest) {
+        alert('Please select what you\'re interested in.');
+        return;
+      }
+      if (!message) {
+        alert('Please include a message.');
+        return;
+      }
+
+      const subject = encodeURIComponent('New inquiry: ' + interest + ' — Universal Water Alliance');
+      const body = encodeURIComponent(
+        'Name: ' + fname + ' ' + lname + '\n' +
+        'Email: ' + email + '\n' +
+        'Interest: ' + interest + '\n\n' +
+        'Message:\n' + message
+      );
+
+      window.location.href = 'mailto:info@universalwateralliance.com?subject=' + subject + '&body=' + body;
     }
 
-    // Smooth active nav highlight
+    // ── Active nav highlight ──
     const sections = document.querySelectorAll('section[id], div[id]');
     const navLinks = document.querySelectorAll('.nav-links a');
     window.addEventListener('scroll', () => {
