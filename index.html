@@ -87,6 +87,13 @@
 
     .nav-cta:hover { background: var(--gold-lt); }
 
+    .nav-brand-logo {
+      height: 34px;
+      width: auto;
+      display: block;
+      margin-left: 1.25rem;
+    }
+
     /* ── HERO ── */
     .hero {
       min-height: 100vh;
@@ -718,6 +725,7 @@
       .form-row { grid-template-columns: 1fr; }
       .hero-rings { display: none; }
       .hero-stat-bar { gap: 1.5rem; }
+      .nav-brand-logo { height: 26px; margin-left: 0.75rem; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -733,10 +741,12 @@
     <ul class="nav-links">
       <li><a href="#about">Mission</a></li>
       <li><a href="#programs">Programs</a></li>
-      <li><a href="shop.html">Shop</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
-    <a href="shop.html" class="nav-cta">Give Back</a>
+    <div style="display:flex; align-items:center;">
+      <a href="shop.html" class="nav-cta">Give Back</a>
+      <img src="logo.svg" alt="Universal Water Alliance logo" class="nav-brand-logo" />
+    </div>
   </nav>
 
   <!-- HERO -->
@@ -781,7 +791,6 @@
   <div class="mission-strip">
     <div class="mission-strip-item"><span class="icon">💧</span> Every purchase counts</div>
     <div class="mission-strip-item"><span class="icon">🌍</span> Sub-Saharan Africa · Rural South Asia</div>
-    <div class="mission-strip-item"><span class="icon">✦</span> Certified B-Corp</div>
     <div class="mission-strip-item"><span class="icon">◎</span> 501(c)(3) Non-Profit</div>
   </div>
 
@@ -823,7 +832,7 @@
   <section class="programs" id="programs">
     <div class="inner">
       <p class="section-label">What We Do</p>
-      <h2 class="section-title">Six ways we<br/><em>move water.</em></h2>
+      <h2 class="section-title">Seven ways we<br/><em>move water.</em></h2>
       <div class="programs-grid" style="margin-top:3.5rem;">
 
         <div class="program-card">
@@ -868,6 +877,13 @@
           <p class="program-desc">Every donor receives a quarterly impact report with GPS coordinates, photos, and water quality data from the projects their purchase funded.</p>
         </div>
 
+        <div class="program-card">
+          <div class="program-icon">🏠</div>
+          <div class="program-tag">Orphan Care</div>
+          <h3 class="program-title">Food, Clothing & Housing</h3>
+          <p class="program-desc">Beyond clean water, we support orphaned children with regular meals, clothing, and safe housing — partnering with local caregivers to provide a stable, secure home life.</p>
+        </div>
+
       </div>
     </div>
   </section>
@@ -889,8 +905,6 @@
       <span>◆</span>
       <span>501(c)(3) Certified</span>
       <span>◆</span>
-      <span>B-Corp Member</span>
-      <span>◆</span>
       <span>Well Construction</span>
       <span>◆</span>
       <span>Bottle Distribution</span>
@@ -904,8 +918,6 @@
       <span>Quarterly Impact Reports</span>
       <span>◆</span>
       <span>501(c)(3) Certified</span>
-      <span>◆</span>
-      <span>B-Corp Member</span>
       <span>◆</span>
     </div>
   </div>
@@ -925,12 +937,7 @@
             <li>Impact report included with every order</li>
             <li>Bulk corporate gifting available — custom branding on request</li>
           </ul>
-          <div class="price-block">
-            <div class="price-big">$120</div>
-            <div class="price-detail">per pack of 24<br/>$5.00 per bottle · Min. 1 pack</div>
-          </div>
           <div style="display:flex; gap:1rem; flex-wrap:wrap;">
-            <a href="shop.html" class="btn-primary">Order a Pack — $120</a>
             <a href="shop.html" class="btn-ghost" style="border-color:rgba(184,154,90,0.4); color:rgba(184,154,90,0.7);">Bulk Enquiry →</a>
           </div>
           <p style="font-size:0.72rem; color:rgba(255,255,255,0.3); margin-top:1rem; letter-spacing:0.06em;">✦ Majority of net profits fund water infrastructure globally</p>
@@ -949,7 +956,7 @@
   <!-- TRANSPARENCY -->
   <section class="transparency" id="impact">
     <div class="inner">
-      <div class="transparency-grid">
+      <div class="transparency-grid" style="grid-template-columns: 1fr; max-width: 640px;">
         <div>
           <p class="section-label">Accountability</p>
           <h2 class="section-title">Where your<br/><em>money goes.</em></h2>
@@ -960,38 +967,6 @@
             No vague charity statistics. Real wells. Real coordinates. Real communities.
           </p>
           <a href="#contact" class="btn-primary" style="margin-top:2rem; display:inline-block;">Request Impact Report</a>
-        </div>
-        <div>
-          <div class="report-card">
-            <p style="font-size:0.65rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--gold); margin-bottom:1rem;">Sample Q1 Impact Report</p>
-            <div class="report-row">
-              <span class="report-label">Wells constructed</span>
-              <span class="report-val">14</span>
-            </div>
-            <div class="report-row">
-              <span class="report-label">People reached</span>
-              <span class="report-val">6,800+</span>
-            </div>
-            <div class="report-row">
-              <span class="report-label">Filtration bottles distributed</span>
-              <span class="report-val">1,240</span>
-            </div>
-            <div class="report-row">
-              <span class="report-label">Sensor networks deployed</span>
-              <span class="report-val">9</span>
-            </div>
-            <div class="report-row">
-              <span class="report-label">Community members trained</span>
-              <span class="report-val">2,500+</span>
-            </div>
-            <div class="report-row">
-              <span class="report-label">Average response time</span>
-              <span class="report-val">31hrs</span>
-            </div>
-            <div style="margin-top:1.5rem; padding:1rem; background:var(--bone); font-size:0.78rem; color:#777; line-height:1.6;">
-              📍 GPS data, photos, and water quality readings for each project included in full report.
-            </div>
-          </div>
         </div>
       </div>
     </div>
@@ -1079,7 +1054,6 @@
         <ul class="footer-links">
           <li><a href="#about">Mission</a></li>
           <li><a href="#programs">Programs</a></li>
-          <li><a href="shop.html">Shop</a></li>
           <li><a href="#contact">Contact</a></li>
           <li><a href="#impact">Impact Reports</a></li>
           <li><a href="#">Privacy</a></li>
@@ -1089,7 +1063,6 @@
         <div class="footer-copy">© 2026 Universal Water Alliance. Every purchase brings water closer.</div>
         <div class="footer-badges">
           <span class="badge">501(c)(3)</span>
-          <span class="badge">B-Corp</span>
         </div>
       </div>
     </div>
